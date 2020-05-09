@@ -1,0 +1,23 @@
+.titulo {
+	text-align: center;
+}
+
+.centralizar{
+	margin-left: auto;
+    margin-right: auto;
+}
+
+.lugar {
+	width: 5vh;
+	height: 5vh;
+	border: 1px solid #8B4513;
+	border-radius: 50%;	
+}
+
+.selecionado {
+}
+
+.verde {
+	background-color: green;
+
+}
