@@ -1,17 +1,35 @@
+var lugares = document.querySelectorAll(".lugar");
+let icia = document;
 
-var lugares= document.querySelectorAll(".lugar");
+function openForm() {
+  document.getElementById("beerCapForm").style.display = "block";
+}
 
-function selecionarLugar(lugar) {
+function closeForm() {
+	let icia = document.getElementById("beerCapColor").value;
+	console.log("icia");
+  document.getElementById("beerCapForm").style.display = "none";
+}
+
+function closeeForm() {
+	var beerCapColor = document.getElementById("beerCapColor").value;
+
+	icia.style.backgroundColor = beerCapColor;
+}
+
+
+function marcarLugar(lugar) {
 	//event.preventDefault();
-	lugar.classList.add("selecionado-verde");
     alert("OI");
 };
 
+
 for (var i = 0; i < lugares.length; i++) {
     lugares[i].addEventListener('click', function () {
-		//event.preventDefault();
-		this.classList.add("verde");
-  		alert("Lugar marcado");
+    	icia = this;
+    	openForm();
+    	//event.preventDefault();
 	});
 }
+
 

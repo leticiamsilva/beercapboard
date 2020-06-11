@@ -1,6 +1,7 @@
 
 <html>
-     <head>
+     <head>     	     	
+     	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
      	<link rel="stylesheet" type="text/css" href="assets/css/tampinhas.css">
 
         <title>Tampinhas</title>
@@ -55,7 +56,7 @@
 			        <td class="lugar"></td>
 			        <td class="lugar"></td>
 			    </tr>
-			     <tr>
+			      <tr>
 			    	<td class="lugar"></td>
 			        <td class="lugar"></td>
 			        <td class="lugar"></td>
@@ -144,7 +145,7 @@
 			        <td class="lugar"></td>
 			    </tr>
 			     <tr>
-			    	<td class="lugar"></td>
+					<td class="lugar"></td>
 			        <td class="lugar"></td>
 			        <td class="lugar"></td>
 			        <td class="lugar"></td>
@@ -187,12 +188,34 @@
 			        <td class="lugar"></td>
 			        <td class="lugar"></td>
 			    </tr>
-			     <tr>
+			    <!-- <tr>
 			    	<td class=""><image src="assets/img/planta-carnivora.png"</td>
-			    </tr>
+			    </tr> -->
 
 			</table> 
 		</section>         
+
+		<div class="form-popup" id="beerCapForm">
+		  <form action="xxxx" class="form-container">
+		    <h1>Informações</h1>
+
+		    <label for="date">Data:</label>
+		    <input type="date" name="date" required>
+
+		    <label for="beerName">Nome da Cerveja:</label>
+		    <input type="text" placeholder="Nome da cerveja" name="beerName" required>
+
+		    <label for="comments">Comentários:</label>
+		    <input type="text" placeholder="Escreva algo para lembrar desse momento :) " name="comments" required>
+
+		    <label for="beerCapcolor">Cor da tampinha:</label>
+		    <input type="color" id="beerCapColor" name="beerCapcolor" required >
+
+		    <button type="submit" id="saveForm" class="btn" onclick="closeeForm()">Salvar</button>
+		    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+		  </form>
+		</div>
+
         <footer>
             <p>Todos os direitos reservados.</p>
         </footer>
