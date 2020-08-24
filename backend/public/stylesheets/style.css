@@ -1,0 +1,107 @@
+body {
+   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+header {
+	margin: 2em 0;
+}
+
+h1 {
+	font-size: 2.5em;
+}
+
+.titulo {
+	text-align: center;
+}
+
+.centralizar{
+	margin-left: auto;
+    margin-right: auto;
+}
+
+.lugar {
+	-webkit-border-radius: 50%;
+	width: 5vh;
+	height: 5vh;
+	border: 1px solid #8B4513;
+	border-radius: 50%;	
+	
+}
+
+.selecionado {
+}
+
+.verde {
+	background-color: green;
+
+}
+
+
+/* Form */
+
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 5em;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+  font-family: arial;
+  font-weight: bold; 
+  margin: 8vh;
+
+}
+
+.form-popup h1 { 	
+	font-size: 1.3em; 
+	margin: 0.5em 0 1.5em;
+}
+
+.form-container {
+  max-width: 400px;
+  padding: 10px;
+  background-color: white;
+}
+
+.form-container input[type=text], .form-container input[type=date] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+.form-container .btn {
+  background-color: #5e5e5e;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+input[type="color" i] {
+   	width: 5vh;
+	height: 5vh;
+    color: white;
+    border: none;
+}
+
+#saveForm {
+	margin: 1.5em 0 0.5em;
+}

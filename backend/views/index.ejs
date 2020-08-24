@@ -1,10 +1,10 @@
 
 <html>
-     <head>     	     	
+     <head> 
      	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-     	<link rel="stylesheet" type="text/css" href="assets/css/tampinhas.css">
-
-        <title>Tampinhas</title>
+     	<link rel='stylesheet' href='/stylesheets/style.css' />
+     	
+     	  <title><%= title %></title>
      </head>
      <body>
         <header class="centralizar">
@@ -196,7 +196,7 @@
 		</section>         
 
 		<div class="form-popup" id="beerCapForm">
-		  <form action="xxxx" class="form-container">
+		  <form action="/cadastrar" method="POST" class="form-container">
 		    <h1>Informações</h1>
 
 		    <label for="date">Data:</label>
@@ -223,3 +223,4 @@
         <script src="assets/js/tampinhas.js"></script>
      </body> 
   </html>
+</html>
