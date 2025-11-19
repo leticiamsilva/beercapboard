@@ -1,0 +1,47 @@
+
+<html>
+     <head> 
+     	<link rel='stylesheet' href='/stylesheets/reset.css' />
+     	<link rel='stylesheet' href='/stylesheets/style.css' />
+
+     		<title><%= title %></title> <!--PORTA 3000-->
+     </head>
+     <body>
+        <header class="centralizar">
+            <h1 class="titulo">Memórias</h1>           
+        </header>
+        <section id="quadro">
+			
+		</section>         
+
+		<div class="form-popup" id="beerCapFormDiv">
+		<!--  <form id="save-beercap-form" action="/cadastrar" method="POST" class="form-container"> -->
+		<form id="beerCapForm" class="form-container">
+		    <h1>Informações</h1>
+
+		    <label for="date">Data:</label>
+		    <input type="date" name="date" required>
+
+		    <label for="beerName">Nome da Cerveja:</label>
+		    <input type="text" placeholder="Nome da cerveja" name="beerName" required>
+
+		    <label for="comments">Comentários:</label>
+		    <input type="text" placeholder="Escreva algo para lembrar desse momento :) " name="comments" required>
+
+		    <label for="beerCapcolor">Cor da tampinha:</label>
+		    <input type="color" id="beerCapColor" name="beerCapcolor" required >
+
+		    <button id="btnSaveForm" class="btn">Salvar</button>
+		    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+		  </form>
+		</div>
+
+        <footer>
+            <p>Todos os direitos reservados.</p>
+        </footer>
+
+        <script src="/javascripts/monta-quadro.js"></script>
+       <script src="/javascripts/tampinhas.js"></script>
+     </body> 
+  </html>
+</html>
