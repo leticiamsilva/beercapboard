@@ -1,0 +1,14 @@
+# Node modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Diretórios de build / dist
+dist/
+build/
+
+# Arquivos de ambiente
+.env
