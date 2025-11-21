@@ -13,53 +13,32 @@ const beerSchema = z.object({
   beerCapColor: z.string().min(1, "Cor da tampinha é obrigatória")
 });
 
-function createBeer(data) {
-  const parsed = beerSchema.parse(data); 
-
-  return new Beer(
-    parsed.id,
-    parsed.dataConsumo,
-    parsed.nome,
-    parsed.cervejaria,
-    parsed.pais,
-    parsed.comentarios,
-    parsed.beerCapColor
-  );
+async function createBeer(userId, data) {
+  return await excelRepo.createBeer(userId, data);
 }
 
 async function getAllByUserId(userId) {
   return await excelRepo.getAllByUserId(userId);
-  /*return createBeer({
-    id: 1,
-    dataConsumo: new Date(),
-    nome: "Interstellar",
-    cervejaria: "Hocus Pocus",
-    pais: "Brasil",
-    comentarios: "IPA muito boa",
-    beerCapColor: "blue"
-  });*/
+}
+
+async function getAllResumeByUserIdAndIdDBeerCapBoard(userId, idDBeerCapBoard) {
+  //raw pois é um dado cru do banco
+  const raw =  await excelRepo.getAllBeerResumeByUserIdAndIdDBeerCapBoard(userId, idDBeerCapBoard);
+
+  return raw.map(item => ({
+    id: item.idBeerCapBoard,
+    beerCapColor: item.beerCapColor
+  }));
 }
 
 async function getOneById(id) {
   return await excelRepo.getOneById(id);
 }
 
-/*
-function getOneById(id) {
-    // SIMULAÇÃO de retorno do serviço
-  return createBeer({
-    id: 3,
-    dataConsumo: new Date(),
-    nome: "Interstellar",
-    cervejaria: "Hocus Pocus",
-    pais: "Brasil",
-    comentarios: "IPA muito boa",
-    beerCapColor: "blue"
-  });
-}*/
-
 module.exports = {
+  createBeer,
   getOneById,
   createBeer,
-  getAllByUserId
+  getAllByUserId,
+  getAllResumeByUserIdAndIdDBeerCapBoard
 };

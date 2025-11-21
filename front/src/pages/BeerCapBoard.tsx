@@ -1,5 +1,6 @@
 import { useState } from "react";
 import React from "react";
+import { BeerCapForm } from "./BeerForm";
 
 export interface Beer {
   id: number;
@@ -16,7 +17,8 @@ interface BeerCapBoardProps {
 }
 
 export default function BeerCapBoardPage ({ beers }: BeerCapBoardProps) {
-  const [showForm, setShowForm] = useState(false);
+  const [showBeerForm, setShowBeerForm] = useState(false);
+  const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
 
   const totalSlots = 8*5;
   const slots = Array.from({ length: totalSlots }, (_, i) => i + 1);
@@ -24,18 +26,13 @@ export default function BeerCapBoardPage ({ beers }: BeerCapBoardProps) {
   // transforma lista em mapa para lookup rápido (id → beer)
   const beerMap = new Map(beers.map(beer => [beer.id, beer]));
 
-  function openForm() {
-    setShowForm(true);
+  function handleClickSlot(slot: number) {
+    setSelectedSlot(slot);
+    setShowBeerForm(true);
   }
 
-  function closeForm() {
-    setShowForm(false);
-  }
-
-  function handleSave(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    // aqui você vai chamar o service para salvar
-    console.log("Salvar informações");
+  function closeBeerForm() {
+    setShowBeerForm(false);
   }
 
   return (
@@ -47,7 +44,7 @@ export default function BeerCapBoardPage ({ beers }: BeerCapBoardProps) {
     {/* Quadro */}
     <div
       style={{
-        width: "500px",
+        width: "600px",
         padding: "20px",
         border: "2px solid #ccc",
         borderRadius: "12px",
@@ -63,6 +60,7 @@ export default function BeerCapBoardPage ({ beers }: BeerCapBoardProps) {
         return (
           <div
             key={slotNumber}
+            onClick={() => handleClickSlot(slotNumber)}
             style={{
               width: "45px",
               height: "45px",
@@ -90,55 +88,43 @@ export default function BeerCapBoardPage ({ beers }: BeerCapBoardProps) {
     </div>
 
       {/* FORM POPUP */}
-      {showForm && (
-        <div className="form-popup" id="beerCapFormDiv">
-          <form id="beerCapForm" className="form-container" onSubmit={handleSave}>
-            <h1>Informações</h1>
+      {showBeerForm && (
+         <div style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
 
-            <label htmlFor="date">Data:</label>
-            <input type="date" name="date" required />
+          <div
+            style={{
+              background: "#fff",
+              padding: "20px",
+              borderRadius: "8px",
+              minWidth: "320px",
+              position: "relative",
+            }}
+          >
 
-            <label htmlFor="beerName">Nome da Cerveja:</label>
-            <input
-              type="text"
-              placeholder="Nome da cerveja"
-              name="nome"
-              required
-            />
-
-            <label htmlFor="comments">Comentários:</label>
-            <input
-              type="text"
-              placeholder="Escreva algo para lembrar desse momento :)"
-              name="comments"
-              required
-            />
-
-            <label htmlFor="beerCapcolor">Cor da tampinha:</label>
-            <input
-              type="color"
-              id="beerCapColor"
-              name="beerCapcolor"
-              required
-            />
-
-            <button id="btnSaveForm" className="btn" type="submit">
-              Salvar
-            </button>
-
+            {/* BOTÃO FECHAR */}
             <button
-              type="button"
-              className="btn cancel"
-              onClick={closeForm}
-            >
-              Fechar
-            </button>
-          </form>
-        </div>
+              onClick={() => closeBeerForm()}
+              style={{ position: "absolute", top: 5, right: 5 }}
+            > Fechar X </button>
+          
+           <BeerCapForm idUser={1} />
+          </div>
+        </div>        
       )}
 
       <footer>
-        <p>Todos os direitos reservados.</p>
+        <p>Todos os direitos reservados. Cheers!</p>
       </footer>
     </div>
   );

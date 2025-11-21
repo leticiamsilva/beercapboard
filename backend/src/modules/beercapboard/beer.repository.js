@@ -29,6 +29,27 @@ async function ensureFile() {
   }
 }
 
+async function createBeer(userId, beerData) {
+
+  const workbook = await ensureFile();
+  const sheet = workbook.getWorksheet("beercapboard");
+
+  sheet.addRow([
+    null,              // ExcelJS ignora o índice 0
+    payload.id,        // col 1
+    payload.data_consumo, // col 2
+    payload.nome,      // col 3
+    payload.cervejaria,// col 4
+    payload.pais,      // col 5
+    payload.comentarios, // col 6
+    payload.beerCapColor // col 7
+  ]);
+
+  return {
+    success: true
+  };
+}
+
 async function getAllByUserId(userId) {
   const wb = await ensureFile();
   const sheet = wb.getWorksheet("beercapboard");
@@ -46,10 +67,22 @@ async function getAllByUserId(userId) {
     }));
 }
 
+async function getAllBeerResumeByUserIdAndIdDBeerCapBoard(userId, beerCapBoardId) {
+  const wb = await ensureFile();
+  const sheet = wb.getWorksheet("beercapboard");
+
+  return sheet.getSheetValues()
+    .slice(2) // remove linha de header
+    .map(registro => ({
+      idBeerCapBoard: registro[1],
+      beerCapColor: registro[7]
+    }));
+}
+
 async function getOneById(id) {
     return null;
  // const all = await getAll();
  // return all.find(b => b.id === id) || null;
 }
 
-module.exports = { getAllByUserId, getOneById };
+module.exports = { createBeer, getAllByUserId, getOneById, getAllBeerResumeByUserIdAndIdDBeerCapBoard };
