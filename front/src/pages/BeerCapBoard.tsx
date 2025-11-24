@@ -4,6 +4,8 @@ import { BeerForm } from "./BeerForm";
 
 export interface Beer {
   id: number;
+  idBoard: number; 
+  posicao: number;
   dataConsumo: string;
   nome: string;
   cervejaria: string;
@@ -24,7 +26,7 @@ export default function BeerCapBoardPage ({ beers }: BeerCapBoardProps) {
   const slots = Array.from({ length: totalSlots }, (_, i) => i + 1);
 
   // transforma lista em mapa para lookup rápido (id → beer)
-  const beerMap = new Map(beers.map(beer => [beer.id, beer]));
+  const beerMap = new Map(beers.map(beer => [beer.posicao, beer]));
 
   function handleClickSlot(slot: number) {
     setSelectedSlot(slot);

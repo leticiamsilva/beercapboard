@@ -1,6 +1,8 @@
 class Beer {
-    constructor(id, dataConsumo, nome, cervejaria, pais,comentarios, beerCapColor) {
+    constructor(id, idBoard, posicao, dataConsumo, nome, cervejaria, pais,comentarios, beerCapColor) {
     this.id = id;
+    this.idBoard
+    this.posicao = posicao
     this.dataConsumo= dataConsumo;
     this.nome = nome;
     this.cervejaria = cervejaria;

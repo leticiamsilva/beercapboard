@@ -4,7 +4,8 @@ const excelRepo = require("./beer.repository");
 
 
 const beerSchema = z.object({
-  id: z.number().min(1, "Posição no quadro é obrigatória"),
+  idBoard: z.number().min(1, "Obrigatório informar o quadro"),
+  posicao: z.number().min(1, "Posição da tampinha no quadro é obrigatória"),
   dataConsumo: z.date(),
   nome: z.string().min(1, "Nome é obrigatório"),
   cervejaria: z.string().min(1, "Cervejaria é obrigatória"),
@@ -13,20 +14,20 @@ const beerSchema = z.object({
   beerCapColor: z.string().min(1, "Cor da tampinha é obrigatória")
 });
 
-async function createBeer(userId, data) {
-  return await excelRepo.createBeer(userId, data);
+async function createBeer(idBoard, data) {
+  return await excelRepo.createBeer(idBoard, data);
 }
 
-async function getAllByUserId(userId) {
-  return await excelRepo.getAllByUserId(userId);
+async function getAllByIdBoard(idBoard) {
+  return await excelRepo.getAllByIdBoard(idBoard);
 }
 
-async function getAllResumeByUserIdAndIdDBeerCapBoard(userId, idDBeerCapBoard) {
+async function getAllBeerResumeByIdBoard(idBoard) {
   //raw pois é um dado cru do banco
-  const raw =  await excelRepo.getAllBeerResumeByUserIdAndIdDBeerCapBoard(userId, idDBeerCapBoard);
+  const raw =  await excelRepo.getAllBeerResumeByIdBoard(idBoard);
 
   return raw.map(item => ({
-    id: item.idBeerCapBoard,
+    posicao: item.posicao,
     beerCapColor: item.beerCapColor
   }));
 }
@@ -39,6 +40,6 @@ module.exports = {
   createBeer,
   getOneById,
   createBeer,
-  getAllByUserId,
-  getAllResumeByUserIdAndIdDBeerCapBoard
+  getAllByIdBoard,
+  getAllBeerResumeByIdBoard
 };

@@ -3,6 +3,7 @@ const Excel = require("exceljs");
 const path = require("path");
 const filePath = path.join(__dirname, "../../../../base", "beercapboard.xlsx");
 
+let id =3;
 async function ensureFile() {
   const workbook = new Excel.Workbook();
 
@@ -16,12 +17,13 @@ async function ensureFile() {
 
     sheet.columns = [
       { header: "id", key: "id", width: 10 },
-      { header: "data_consumo", key: "data_consumo", width: 25 },
+      { header: "id_board", key: "idBoard", width: 10 },
+      { header: "data_consumo", key: "dataConsumo", width: 25 },
       { header: "nome", key: "nome", width: 25 },
       { header: "cervejaria", key: "cervejaria", width: 25 },
       { header: "pais", key: "pais", width: 20 },
       { header: "comentarios", key: "comentarios", width: 30 },
-      { header: "beerCapColor", key: "beerCapColor", width: 15 }
+      { header: "beer_cap_color", key: "beerCapColor", width: 15 }
     ];
 
     await wb.xlsx.writeFile(filePath);
@@ -30,22 +32,27 @@ async function ensureFile() {
 }
 
 async function createBeer(userId, beerData) {
-
+id = id+1;
   const workbook = await ensureFile();
   const sheet = workbook.getWorksheet("beercapboard");
 
-  console.log("informacoes" + beerData.nome);
+  console.log("informacoes" + beerData.idBoard);
+  
 
   sheet.addRow([
     null,              // ExcelJS ignora o índice 0
-    beerData.id,        // col 1
-    beerData.data_consumo, // col 2
-    beerData.nome,      // col 3
-    beerData.cervejaria,// col 4
-    beerData.pais,      // col 5
-    beerData.comentarios, // col 6
-    beerData.beerCapColor // col 7
+    id,        // col 1
+    beerData.idBoard,
+    beerData.posicao,
+    beerData.dataConsumo,
+    beerData.nome,
+    beerData.cervejaria,
+    beerData.pais,
+    beerData.comentarios,
+    beerData.beerCapColor
   ]);
+
+  
 
   await workbook.xlsx.writeFile(filePath);
 
@@ -54,39 +61,39 @@ async function createBeer(userId, beerData) {
   };
 }
 
-async function getAllByUserId(userId) {
+async function getAllByIdBoard(idBoard) {
   const wb = await ensureFile();
-  const sheet = wb.getWorksheet("beercapboard");
+  const sheet = wb.getWorksheet("beer");
 
   return sheet.getSheetValues()
     .slice(2) // remove linha de header
     .map(row => ({
       id: row[1],
-      data_consumo: row[2],
-      nome: row[3],
-      cervejaria: row[4],
-      pais: row[5],
-      comentarios: row[6],
-      beerCapColor: row[7]
+      idBoard:row[2],
+      posicao: row[3],
+      data_consumo: row[4],
+      nome: row[5],
+      cervejaria: row[6],
+      pais: row[7],
+      comentarios: row[8],
+      beerCapColor: row[9]
     }));
 }
 
-async function getAllBeerResumeByUserIdAndIdDBeerCapBoard(userId, beerCapBoardId) {
+async function getAllBeerResumeByIdBoard(idBoard) {
   const wb = await ensureFile();
-  const sheet = wb.getWorksheet("beercapboard");
+  const sheet = wb.getWorksheet("beer");
 
   return sheet.getSheetValues()
     .slice(2) // remove linha de header
     .map(registro => ({
-      idBeerCapBoard: registro[1],
-      beerCapColor: registro[7]
+      posicao: registro[3],
+      beerCapColor: registro[9]
     }));
 }
 
 async function getOneById(id) {
     return null;
- // const all = await getAll();
- // return all.find(b => b.id === id) || null;
 }
 
-module.exports = { createBeer, getAllByUserId, getOneById, getAllBeerResumeByUserIdAndIdDBeerCapBoard };
+module.exports = { createBeer, getAllByIdBoard, getOneById, getAllBeerResumeByIdBoard };

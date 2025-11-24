@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getAllByUserId, getOneById } from "../services/beercapboard.service";
+import { getAllBeerResumeByIdBeerCapBoard, getOneById } from "../services/beercapboard.service";
 import  BeerCapBoard  from "./BeerCapBoard";
 import type { Beer } from "./BeerCapBoard"; // tipo
 
@@ -11,7 +11,7 @@ export default function IndexPage() {
     if (!id) return alert("Digite um ID para recuperar seu quadro!");
 
     //const result = await getOneById(Number(id));
-    const result = await getAllByUserId(Number(id))
+    const result = await getAllBeerResumeByIdBeerCapBoard(Number(id))
     setData(Array.isArray(result) ? result : [result]); //renderizar a pagina do board
   }
 

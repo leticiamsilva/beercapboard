@@ -3,6 +3,7 @@ import { createBeer } from "../services/beercapboard.service";
 
 type BeerFormData = {
   id: string;
+  idBoard: number;
   posicao: number | null;
   data_consumo: string;
   nome: string;
@@ -19,6 +20,7 @@ type Props = {
 export function BeerForm( props: Props) {
   const [formCreateBeer, setForm] = useState<BeerFormData>({
     id: "",
+    idBoard: 1, //TODO passar o idUser de uma pagina pra outra
     posicao: props.posicao,
     data_consumo: "",
     nome: "",

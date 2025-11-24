@@ -7,14 +7,14 @@ export async function getOneById(id: number) {
   return res.json();
 }
 
-export async function getAllByUserId(idUser: number) {
-  const res = await fetch(`${API_URL_CRUD}/getAllByUserId/${idUser}`);
+export async function getAllBeerResumeByIdBeerCapBoard(idBoard: number) {
+  const res = await fetch(`${API_URL_CRUD}/getAllBeerResumeByIdBeerCapBoard/${idBoard}`);
   return res.json();
 }
 
 export async function createBeer(dataCreateBeer: any) {
   console.log("entrou no service");
-  const res = await fetch(`${API_URL_CRUD}/createBeer/${dataCreateBeer.posicao}`, {
+  const res = await fetch(`${API_URL_CRUD}/createBeer/${dataCreateBeer.posicao}`, { //TODO
     method: "POST",
     headers: {
       "Content-Type": "application/json"
