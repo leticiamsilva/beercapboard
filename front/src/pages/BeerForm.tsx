@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { createBeer } from "../services/beercapboard.service";
 
-type BeerCapFormData = {
+type BeerFormData = {
   id: string;
+  posicao: number | null;
   data_consumo: string;
   nome: string;
   cervejaria: string;
@@ -11,12 +13,13 @@ type BeerCapFormData = {
 };
 
 type Props = {
-  idUser: number;
+    posicao: number| null;
 };
 
-export function BeerCapForm({ idUser }: Props) {
-  const [formCreateBeer, setForm] = useState<BeerCapFormData>({
+export function BeerForm( props: Props) {
+  const [formCreateBeer, setForm] = useState<BeerFormData>({
     id: "",
+    posicao: props.posicao,
     data_consumo: "",
     nome: "",
     cervejaria: "",
@@ -29,22 +32,16 @@ export function BeerCapForm({ idUser }: Props) {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/beercaps/${idUser}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formCreateBeer),
-      });
+        const data = await createBeer(formCreateBeer);
 
-      const data = await response.json();
-      console.log("Salvo:", data);
+        console.log("Salvo:", data);
 
-      alert("Registro salvo com sucesso!");
+        alert("Registro salvo com sucesso!");
 
       // Limpa o form
       setForm({
         id: "",
+        posicao: Props.posicao,
         data_consumo: "",
         nome: "",
         cervejaria: "",
@@ -60,7 +57,7 @@ export function BeerCapForm({ idUser }: Props) {
 
   // helper para atualizar campos
   const update =
-    (field: keyof BeerCapFormData) =>
+    (field: keyof BeerFormData) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setForm({ ...formCreateBeer, [field]: e.target.value });
     };
@@ -75,7 +72,7 @@ export function BeerCapForm({ idUser }: Props) {
         maxWidth: "300px",
       }}
     >
-      <input placeholder="ID" value={formCreateBeer.id} onChange={update("id")} />
+      <input  placeholder={String(props.posicao ?? "")} value={formCreateBeer.posicao ?? ""}  onChange={update("posicao")} />
 
       <input
         placeholder="Data de Consumo"
@@ -100,6 +97,7 @@ export function BeerCapForm({ idUser }: Props) {
       />
 
       <input
+        type="color"
         placeholder="Cor do Beer Cap"
         value={formCreateBeer.beerCapColor}
         onChange={update("beerCapColor")}

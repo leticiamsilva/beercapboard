@@ -12,8 +12,9 @@ export async function getAllByUserId(idUser: number) {
   return res.json();
 }
 
-export async function createBeer(idUser: number, dataCreateBeer: any) {
-  const res = await fetch(`${API_URL_CRUD}/createBeer/${idUser}`, {
+export async function createBeer(dataCreateBeer: any) {
+  console.log("entrou no service");
+  const res = await fetch(`${API_URL_CRUD}/createBeer/${dataCreateBeer.posicao}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

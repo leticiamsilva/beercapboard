@@ -34,16 +34,20 @@ async function createBeer(userId, beerData) {
   const workbook = await ensureFile();
   const sheet = workbook.getWorksheet("beercapboard");
 
+  console.log("informacoes" + beerData.nome);
+
   sheet.addRow([
     null,              // ExcelJS ignora o índice 0
-    payload.id,        // col 1
-    payload.data_consumo, // col 2
-    payload.nome,      // col 3
-    payload.cervejaria,// col 4
-    payload.pais,      // col 5
-    payload.comentarios, // col 6
-    payload.beerCapColor // col 7
+    beerData.id,        // col 1
+    beerData.data_consumo, // col 2
+    beerData.nome,      // col 3
+    beerData.cervejaria,// col 4
+    beerData.pais,      // col 5
+    beerData.comentarios, // col 6
+    beerData.beerCapColor // col 7
   ]);
+
+  await workbook.xlsx.writeFile(filePath);
 
   return {
     success: true

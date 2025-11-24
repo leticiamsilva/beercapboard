@@ -2,9 +2,10 @@ const Beer = require("./beer.entity");
 const beerService = require("./beer.service.js");
 
 exports.createBeer = async (req, res) => {
+    console.log("chegoy a req" + req.params);
     const userId = Number(req.params.idUser);
     const beerData = req.body;
-    const created = await beerService.createBeerCap(userId, beerData);
+    const created = await beerService.createBeer(userId, beerData);
     res.json(created);
 }
 
@@ -14,7 +15,7 @@ exports.getOneById = async (req, res) => {
 
     //const beer = beercapBoardService.getOneById(1); 
     //const beers = [];
-    //beers.push(beer); 
+    //beers.push(beer);  
     const beers = await beerService.getOneById(id);      
 
  res.json(beers);

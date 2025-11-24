@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import { BeerCapForm } from "./BeerForm";
+import { BeerForm } from "./BeerForm";
 
 export interface Beer {
   id: number;
@@ -18,7 +18,7 @@ interface BeerCapBoardProps {
 
 export default function BeerCapBoardPage ({ beers }: BeerCapBoardProps) {
   const [showBeerForm, setShowBeerForm] = useState(false);
-  const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<number | null>(null); //criando um state pra guardar o slot clicado
 
   const totalSlots = 8*5;
   const slots = Array.from({ length: totalSlots }, (_, i) => i + 1);
@@ -115,10 +115,10 @@ export default function BeerCapBoardPage ({ beers }: BeerCapBoardProps) {
             {/* BOTÃO FECHAR */}
             <button
               onClick={() => closeBeerForm()}
-              style={{ position: "absolute", top: 5, right: 5 }}
+              style={{ position: "absolute", top: 55, right: 5 }}
             > Fechar X </button>
           
-           <BeerCapForm idUser={1} />
+           <BeerForm posicao={selectedSlot} />
           </div>
         </div>        
       )}
