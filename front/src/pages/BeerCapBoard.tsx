@@ -117,8 +117,22 @@ export default function BeerCapBoardPage ({ beers }: BeerCapBoardProps) {
             {/* BOTÃO FECHAR */}
             <button
               onClick={() => closeBeerForm()}
-              style={{ position: "absolute", top: 55, right: 5 }}
-            > Fechar X </button>
+              style={{ position: "absolute", 
+                top: 10, right: 10, 
+               // border: "1px solid black", 
+                color:"#000000ff", 
+                backgroundColor: "#f9f9f9",
+                borderRadius: "50%",
+                width: "35px",
+                height: "35px",
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+                lineHeight: "1",
+                padding: 0,
+              }
+            }
+            > X </button>
           
            <BeerForm posicao={selectedSlot} />
           </div>

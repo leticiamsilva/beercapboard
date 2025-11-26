@@ -15,6 +15,9 @@ const beerSchema = z.object({
 });
 
 async function createBeer(idBoard, data) {
+
+  data.pais = convertCountryToSigla(data.pais);
+  
   return await excelRepo.createBeer(idBoard, data);
 }
 

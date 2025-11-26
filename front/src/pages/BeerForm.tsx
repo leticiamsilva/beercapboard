@@ -5,7 +5,7 @@ type BeerFormData = {
   id: string;
   idBoard: number;
   posicao: number | null;
-  data_consumo: string;
+  dataConsumo: string;
   nome: string;
   cervejaria: string;
   pais: string;
@@ -22,7 +22,7 @@ export function BeerForm( props: Props) {
     id: "",
     idBoard: 1, //TODO passar o idUser de uma pagina pra outra
     posicao: props.posicao,
-    data_consumo: "",
+    dataConsumo: "",
     nome: "",
     cervejaria: "",
     pais: "",
@@ -43,8 +43,9 @@ export function BeerForm( props: Props) {
       // Limpa o form
       setForm({
         id: "",
-        posicao: Props.posicao,
-        data_consumo: "",
+        idBoard: 1,
+        posicao: props.posicao,
+        dataConsumo: "",
         nome: "",
         cervejaria: "",
         pais: "",
@@ -74,12 +75,16 @@ export function BeerForm( props: Props) {
         maxWidth: "300px",
       }}
     >
+
+      <h3>Cadastro Cerveja</h3>
+
       <input  placeholder={String(props.posicao ?? "")} value={formCreateBeer.posicao ?? ""}  onChange={update("posicao")} />
 
       <input
+        type="date"
         placeholder="Data de Consumo"
-        value={formCreateBeer.data_consumo}
-        onChange={update("data_consumo")}
+        value={formCreateBeer.dataConsumo}
+        onChange={update("dataConsumo")}
       />
 
       <input placeholder="Nome" value={formCreateBeer.nome} onChange={update("nome")} />
