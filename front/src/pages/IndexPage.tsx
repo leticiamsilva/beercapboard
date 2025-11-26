@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getAllBeerResumeByIdBeerCapBoard, getOneById } from "../services/beercapboard.service";
+import { getAllBeerResumeByIdBeerCapBoard } from "../services/beercapboard.service";
 import  BeerCapBoard  from "./BeerCapBoard";
 import type { Beer } from "./BeerCapBoard"; // tipo
 

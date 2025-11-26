@@ -20,7 +20,10 @@ function convertCountryToSigla(value) {
 }
 
 function getCountries() {
-  return countryMap;
+  return Object.entries(countryMap).map(([code, name]) => ({
+    code,
+    name
+  }));
 }
 
 module.exports = {

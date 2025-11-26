@@ -1,6 +1,8 @@
 import { useState } from "react";
 import React from "react";
 import { BeerForm } from "./BeerForm";
+import { getAllBeerResumeByIdBeerCapBoard } from "../services/beercapboard.service";
+
 
 export interface Beer {
   id: number;
@@ -19,18 +21,25 @@ interface BeerCapBoardProps {
 }
 
 export default function BeerCapBoardPage ({ beers }: BeerCapBoardProps) {
+  const [beerList, setBeerList] = useState(beers);
   const [showBeerForm, setShowBeerForm] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null); //criando um state pra guardar o slot clicado
 
   const totalSlots = 8*5;
   const slots = Array.from({ length: totalSlots }, (_, i) => i + 1);
 
-  // transforma lista em mapa para lookup rápido (id → beer)
-  const beerMap = new Map(beers.map(beer => [beer.posicao, beer]));
-
   function handleClickSlot(slot: number) {
     setSelectedSlot(slot);
     setShowBeerForm(true);
+  }
+
+  async function handleBeerSaved() {
+    setShowBeerForm(false);
+  
+    const updated = await getAllBeerResumeByIdBeerCapBoard(1); // coloque o id da board
+   
+    // 3. Atualiza a lista na tela
+    setBeerList(updated);
   }
 
   function closeBeerForm() {
@@ -57,7 +66,7 @@ export default function BeerCapBoardPage ({ beers }: BeerCapBoardProps) {
       }}
     >
       {slots.map((slotNumber) => {
-        const beer = beerMap.get(slotNumber);
+        const beerResume  = beerList.find(b => b.posicao === slotNumber);
 
         return (
           <div
@@ -67,7 +76,7 @@ export default function BeerCapBoardPage ({ beers }: BeerCapBoardProps) {
               width: "45px",
               height: "45px",
               borderRadius: "50%",
-              backgroundColor: beer ? beer.beerCapColor : "#edebebff",
+              backgroundColor: beerResume ? beerResume.beerCapColor : "#edebebff",
               border: "2px solid #888",
               display: "flex",
               alignItems: "center",
@@ -75,11 +84,11 @@ export default function BeerCapBoardPage ({ beers }: BeerCapBoardProps) {
               cursor: "pointer",
               transition: "0.2s",
             }}
-            title={
+           /* title={
               beer
                 ? `${beer.nome} — ${beer.cervejaria}\n${beer.comentarios}`
                 : `Slot ${slotNumber}`
-            }
+            }*/
           >
             <span style={{ fontSize: "14px", fontWeight: "bold" }}>
               {slotNumber}
@@ -134,7 +143,10 @@ export default function BeerCapBoardPage ({ beers }: BeerCapBoardProps) {
             }
             > X </button>
           
-           <BeerForm posicao={selectedSlot} />
+           <BeerForm 
+            posicao={selectedSlot}
+            onSaved={handleBeerSaved} 
+          />
           </div>
         </div>        
       )}

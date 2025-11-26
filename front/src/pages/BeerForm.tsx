@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createBeer } from "../services/beercapboard.service";
+import { getCountries } from "../services/country.service";
 
 type BeerFormData = {
   id: string;
@@ -13,15 +14,21 @@ type BeerFormData = {
   beerCapColor: string;
 };
 
-type Props = {
-    posicao: number| null;
+type Country = {
+  code: string;
+  name: string;
 };
 
-export function BeerForm( props: Props) {
+type Props = {
+    posicao: number| null;
+    onSaved?: (beer: BeerFormData) => void; 
+};
+
+export function BeerForm( { posicao, onSaved }: Props) {
   const [formCreateBeer, setForm] = useState<BeerFormData>({
     id: "",
     idBoard: 1, //TODO passar o idUser de uma pagina pra outra
-    posicao: props.posicao,
+    posicao: posicao,
     dataConsumo: "",
     nome: "",
     cervejaria: "",
@@ -30,21 +37,30 @@ export function BeerForm( props: Props) {
     beerCapColor: "",
   });
 
+  const [countries, setCountries] = useState<Country[]>([]);
+  useEffect(() => {
+    async function load() {
+      const data = await getCountries();
+      setCountries(data);
+    }
+    load();
+  }, []);
+
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     try {
-        const data = await createBeer(formCreateBeer);
+      const savedBeer  = await createBeer(formCreateBeer);
 
-        console.log("Salvo:", data);
-
-        alert("Registro salvo com sucesso!");
+      console.log("Salvo:", savedBeer );
+      alert("Registro salvo com sucesso!");
 
       // Limpa o form
       setForm({
         id: "",
         idBoard: 1,
-        posicao: props.posicao,
+        posicao: posicao,
         dataConsumo: "",
         nome: "",
         cervejaria: "",
@@ -52,6 +68,8 @@ export function BeerForm( props: Props) {
         comentarios: "",
         beerCapColor: "",
       });
+
+      if (onSaved) onSaved(savedBeer);
     } catch (error) {
       console.error(error);
       alert("Erro ao salvar.");
@@ -61,10 +79,17 @@ export function BeerForm( props: Props) {
   // helper para atualizar campos
   const update =
     (field: keyof BeerFormData) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
       setForm({ ...formCreateBeer, [field]: e.target.value });
     };
 
+  const updateSelectCountry =
+  (field: keyof BeerFormData) =>
+  (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setForm({ ...formCreateBeer, [field]: e.target.value });
+  };
+
+  
   return (
     <form
       onSubmit={handleSubmit}
@@ -78,7 +103,7 @@ export function BeerForm( props: Props) {
 
       <h3>Cadastro Cerveja</h3>
 
-      <input  placeholder={String(props.posicao ?? "")} value={formCreateBeer.posicao ?? ""}  onChange={update("posicao")} />
+      <input  placeholder={String(posicao ?? "")} value={formCreateBeer.posicao ?? ""}  onChange={update("posicao")} />
 
       <input
         type="date"
@@ -95,8 +120,18 @@ export function BeerForm( props: Props) {
         onChange={update("cervejaria")}
       />
 
-      <input placeholder="País" value={formCreateBeer.pais} onChange={update("pais")} />
+      <select value={formCreateBeer.pais} onChange={updateSelectCountry("pais")}>
+        <option value="" disabled>
+          -- Selecione um país --
+        </option>
+        {countries.map(c => (
+          <option key={c.code} value={c.code}>
+            {c.name}
+          </option>
+        ))}
+      </select>
 
+      
       <textarea
         placeholder="Comentários"
         value={formCreateBeer.comentarios}

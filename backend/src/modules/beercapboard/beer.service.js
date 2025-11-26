@@ -1,7 +1,7 @@
 const { z } = require("zod");
 const Beer = require("./beer.entity");
 const excelRepo = require("./beer.repository");
-
+const countryService = require("../country/country.service");
 
 const beerSchema = z.object({
   idBoard: z.number().min(1, "Obrigatório informar o quadro"),
@@ -15,10 +15,12 @@ const beerSchema = z.object({
 });
 
 async function createBeer(idBoard, data) {
-
-  data.pais = convertCountryToSigla(data.pais);
+  data.pais = countryService.convertCountryToSigla(data.pais);
   
-  return await excelRepo.createBeer(idBoard, data);
+  await excelRepo.createBeer(idBoard, data);
+  return {
+    message: "Cerveja inserida com sucesso!"
+  };
 }
 
 async function getAllByIdBoard(idBoard) {

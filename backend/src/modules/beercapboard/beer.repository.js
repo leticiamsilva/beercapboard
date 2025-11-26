@@ -3,7 +3,8 @@ const Excel = require("exceljs");
 const path = require("path");
 const filePath = path.join(__dirname, "../../../../base", "beercapboard.xlsx");
 
-let id =3;
+let id =4;
+
 async function ensureFile() {
   const workbook = new Excel.Workbook();
 
@@ -13,9 +14,9 @@ async function ensureFile() {
   } catch {
     // cria novo arquivo
     const wb = new Excel.Workbook();
-    const sheet = wb.addWorksheet("beercapboard");
+    const sheetBeer = wb.addWorksheet("beer");
 
-    sheet.columns = [
+    sheetBeer.columns = [
       { header: "id", key: "id", width: 10 },
       { header: "id_board", key: "idBoard", width: 10 },
       { header: "data_consumo", key: "dataConsumo", width: 25 },
@@ -26,21 +27,28 @@ async function ensureFile() {
       { header: "beer_cap_color", key: "beerCapColor", width: 15 }
     ];
 
+    const sheetBeercapboard = wb.addWorksheet("beercapboard");
+
+     sheetBeercapboard.columns = [
+      { header: "id", key: "idBoard", width: 10 },
+      { header: "id_user", key: "idUser", width: 10 },
+      { header: "nome", key: "nome", width: 100 }
+    ];
+
     await wb.xlsx.writeFile(filePath);
     return wb;
   }
 }
 
 async function createBeer(userId, beerData) {
-id = id+1;
+  id = id+1;
   const workbook = await ensureFile();
-  const sheet = workbook.getWorksheet("beercapboard");
+  const sheet = workbook.getWorksheet("beer");
 
-  console.log("informacoes" + beerData.idBoard);
+  console.log("informacoes idBoard:" + beerData.idBoard);
   
-
   sheet.addRow([
-    null,              // ExcelJS ignora o índice 0
+    //null,              // ExcelJS ignora o índice 0
     id,        // col 1
     beerData.idBoard,
     beerData.posicao,
@@ -52,13 +60,9 @@ id = id+1;
     beerData.beerCapColor
   ]);
 
-  
-
   await workbook.xlsx.writeFile(filePath);
 
-  return {
-    success: true
-  };
+  return workbook;
 }
 
 async function getAllByIdBoard(idBoard) {
